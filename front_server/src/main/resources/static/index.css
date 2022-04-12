@@ -1,0 +1,11 @@
+.open_page{
+  animation: max_size 1s linear forwards;
+}
+@keyframes max_size {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

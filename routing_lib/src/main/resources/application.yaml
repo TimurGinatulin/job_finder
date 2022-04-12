@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: routing-lib
+server:
+  port: 8190
+eureka:
+  client:
+    service-url:
+      default-zone: ${EUREKA_URI:http://localhost:8761/eureka}
