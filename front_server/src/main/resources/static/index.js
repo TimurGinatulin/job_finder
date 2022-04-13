@@ -12,13 +12,9 @@
         templateUrl: 'home/home.html',
         controller: 'homeController'
       })
-      .when('/groups', {
-        templateUrl: 'groups/groups.html',
-        controller: 'groupsController'
-      })
-      .when('/job_finder', {
-        templateUrl: 'job_finder/job_finder.html',
-        controller: 'groupsController'
+      .when('/filter', {
+        templateUrl: 'filter/filter.html',
+        controller: 'filterController'
       })
       .otherwise({
         redirectTo: '/'
