@@ -9,22 +9,22 @@
             </div>
         </div>
         <br>
-        <div class="row g-3 align-items-center">
-            <div class="col-auto">
+        <div class="row g-3 align-items-start">
+            <div class="col">
                 <select class="form-select" aria-label="Default select example" id="countrySelector"
                         aria-describedby="countrySelectorDesc">
                     <option selected>Undefined</option>
                 </select>
                 <div id="countrySelectorDesc" class="form-text">Country</div>
             </div>
-            <div class="col-auto">
+            <div class="col">
                 <select class="form-select" aria-label="Default select example" id="regionSelector"
                         aria-describedby="regionSelectorDesc" Disabled>
                     <option selected>Undefined</option>
                 </select>
                 <div id="regionSelectorDesc" class="form-text">Region</div>
             </div>
-            <div class="col-auto">
+            <div class="col">
                 <select class="form-select" aria-label="Default select example" id="citySelector"
                         aria-describedby="citySelectorDesc" Disabled>
                     <option selected>Undefined</option>
@@ -42,7 +42,7 @@
                 <div id="experienceSelectorDesc" class="form-text">Experience</div>
             </div>
             <div class="col-auto">
-                <select class="form-select" aria-label="Default select example" id="employmentSelector"
+                <select class="form-select" multiple aria-label="Default select example" id="employmentSelector"
                         aria-describedby="employmentSelectorDesc">
                     <option selected>Undefined</option>
                 </select>
@@ -55,9 +55,13 @@
                 </select>
                 <div id="scheduleSelectorDesc" class="form-text">Schedule</div>
             </div>
+            <div class="col-auto">
+                <input type="text" class="form-control" aria-describedby="addon-wrapping" id="salary">
+                <div id="salaryDesc" class="form-text">Salary (RUR)</div>
+            </div>
         </div>
         <br>
-        <div class="row g-3 align-items-center">
+        <div class="row g-2 align-items-center">
             <div class="col-auto">
                 <select class="form-select" aria-label="Default select example" id="specializationSelector"
                         aria-describedby="specializationSelectorDesc">
@@ -65,7 +69,7 @@
                 </select>
                 <div id="specializationSelectorDesc" class="form-text">Specialization</div>
             </div>
-            <div class="col-auto">
+            <div class="col">
                 <select class="form-select" aria-label="Default select example" id="subSpecializationSelector"
                         aria-describedby="subSpecializationSelectorDesc" Disabled>
                     <option selected>Undefined</option>
@@ -74,15 +78,15 @@
             </div>
         </div>
         <br>
-        <div class="row g-3 align-items-center">
+        <div class="row g-2 align-items-center">
             <div class="col-auto">
                 <select class="form-select" aria-label="Default select example" id="industrySelector"
                         aria-describedby="industrySelectorDesc">
                     <option selected>Undefined</option>
                 </select>
-                <div id="industrySelectorDesc" class="form-text">Industry</div>
+                <div id="industrySelectorDesc" class="form-text">Industry of the company that posted the vacancy</div>
             </div>
-            <div class="col-auto">
+            <div class="col">
                 <select class="form-select" aria-label="Default select example" id="subIndustrySelector"
                         aria-describedby="subIndustrySelectorDesc" Disabled>
                     <option selected>Undefined</option>
@@ -90,6 +94,8 @@
                 <div id="subIndustrySelectorDesc" class="form-text">Sub Industry</div>
             </div>
         </div>
+        <br>
+        <div class="p-3 mb-2 bg-warning text-dark" id="test" >  </div>
         <br>
         <div id="findVacancyLabel"></div>
         <button type="submit" class="btn btn-primary">Submit</button>
