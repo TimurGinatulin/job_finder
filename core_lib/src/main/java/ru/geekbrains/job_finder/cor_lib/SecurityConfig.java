@@ -31,8 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/auth/**","/users-ms/**","/**").permitAll()
-                .antMatchers("/api654/**").authenticated()
+                .antMatchers("/auth/**","/hh_service/get_by_code").permitAll()
+                .antMatchers("/hh_service/filters").authenticated()
                 .and()
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
     }

@@ -34,6 +34,10 @@ angular.module('app').controller('filterController', function ($scope, $http, $l
 
     cSalary.addEventListener('input', updateFields);
 
+    if($localStorage.apsToken){
+        $http.defaults.headers.common.Authorization = $localStorage.apsToken;
+    }
+
     function updateFields(jobTitleInp) {
         checkFilterFields();
         if (cSpecializationSelector.value == 'Undefined')
