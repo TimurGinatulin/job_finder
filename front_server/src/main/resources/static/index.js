@@ -16,6 +16,10 @@
         templateUrl: 'filter/filter.html',
         controller: 'filterController'
       })
+      .when('/filter_list', {
+        templateUrl: 'filterList/filterList.html',
+        controller: 'filterListController'
+      })
       .otherwise({
         redirectTo: '/'
       });
