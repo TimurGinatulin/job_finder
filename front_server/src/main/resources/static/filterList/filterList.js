@@ -3,18 +3,10 @@ angular.module('app').controller('filterListController', function ($scope, $http
   const cFilterItemElements = document.getElementsByClassName('list-group-item');
   const cFilterGroupElement = document.getElementById('filterListGroup');
 
-  var testResponse = [
-  {resume: 'programmer',totalSend: 124,cond: 'true'},{resume: 'sheff',totalSend: 14,cond: 'false'},{resume: 'driver',totalSend: 1243,cond: 'true'}
-  ];
-
-  doSmt = function(){
-    for(var i = 0; i < cFilterItemElements.length; i++){
-      console.log('filterHeader ' + cFilterItemElements[i].getElementsByClassName('filterHeader')[0].textContent
-      + 'condition ' + cFilterItemElements[i].getElementsByClassName('condition')[0].textContent
-      );
-    }
+  if($localStorage.apsToken){
+    $http.defaults.headers.common.Authorization = $localStorage.apsToken;
   }
-  //doSmt();
+
   addFilterAtTable = function(filterArray){
     filterArray.forEach(el=>{
     var vAElement = document.createElement('a');
@@ -52,12 +44,9 @@ angular.module('app').controller('filterListController', function ($scope, $http
     });
   }
   uploadFilterList = function(){
-  console.log($http.defaults.headers.common.Authorization);
     $http.get(contextPath + '/hh_service/filters')
       .then(function (response){
-        let filterArray = response.data;
-        addFilterAtTable(filterArray);
-        console.log(filterArray);
+        addFilterAtTable(response.data);
       });
   }
   uploadFilterList();
