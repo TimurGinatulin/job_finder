@@ -1,0 +1,28 @@
+package ru.geekbrains.job_finder.ms_user.models.entity;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import ru.geekbrains.job_finder.ms_user.models.Enum.EmploymentEnum;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "empolyment")
+@NoArgsConstructor
+@Data
+public class Employment {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "empolyment_id")
+    private String id;
+
+    @Column(name = "name")
+    private String name;
+
+    Employment(EmploymentEnum employmentEnum) {
+        this.id = employmentEnum.getId();
+        this.name = employmentEnum.getName();
+    }
+
+}

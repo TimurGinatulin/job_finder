@@ -38,6 +38,9 @@ public class User {
     )
     private List<Role> roles;
 
+    @OneToMany(mappedBy = "user")
+    private List<Filter> filter;
+
     public User(UserDto userDto) {
         this.id = userDto.getId();
         this.firstName = userDto.getFirstName();
