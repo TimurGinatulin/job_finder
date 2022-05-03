@@ -1,4 +1,4 @@
-package ru.geekbrains.job_finder.ms_user.models.entity;
+package ru.geekbrains.job_finder.headHinterService.models.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,9 +18,8 @@ public class Filter {
     @Column(name = "filter_id")
     private Long idFilter;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "user_id")
+    private Long userId;
 
     @Column(name = "name")
     private String filterName;

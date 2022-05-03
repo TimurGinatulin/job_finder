@@ -1,4 +1,4 @@
-package ru.geekbrains.job_finder.ms_user.models.entity;
+package ru.geekbrains.job_finder.headHinterService.models.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
