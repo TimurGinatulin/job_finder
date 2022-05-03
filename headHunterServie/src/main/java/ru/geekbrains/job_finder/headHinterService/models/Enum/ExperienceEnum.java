@@ -1,4 +1,4 @@
-package ru.geekbrains.job_finder.ms_user.models.Enum;
+package ru.geekbrains.job_finder.headHinterService.models.Enum;
 
 public enum ExperienceEnum {
     NO_EXPERIENCE("noExperience", "Нет опыта"),
