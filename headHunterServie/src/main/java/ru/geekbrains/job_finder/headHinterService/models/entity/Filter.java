@@ -26,13 +26,15 @@ public class Filter {
 
     @Column(name = "text")
     private String text;
+    @Column(name = "summary_id")
+    private String summaryId;
 
     @Column(name = "salary")
     private Long salary;
 
     @ManyToOne
     @JoinColumn(name = "currency_id")
-    private Salary currency;
+    private Currency currency;
 
     @ManyToOne
     @JoinColumn(name = "area_id")

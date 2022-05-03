@@ -2,7 +2,7 @@ package ru.geekbrains.job_finder.headHinterService.models.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.geekbrains.job_finder.ms_user.models.Enum.EmploymentEnum;
+import ru.geekbrains.job_finder.headHinterService.models.Enum.EmploymentEnum;
 
 import javax.persistence.*;
 

@@ -46,6 +46,7 @@ CREATE TABLE `experience` (
 
 CREATE TABLE `filter` (
   `filter_id` bigint NOT NULL AUTO_INCREMENT,
+  `summary_id` varchar(127) NOT NULL,
   `cover_letter` varchar(255) DEFAULT NULL,
   `deleted_at` datetime(6) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -54,7 +55,7 @@ CREATE TABLE `filter` (
   `time_stamp` datetime(6) DEFAULT NULL,
   `updated_at` datetime(6) DEFAULT NULL,
   `area_id` bigint DEFAULT NULL,
-  `currency_id` bigint DEFAULT NULL,
+  `currency_id` varchar(3) DEFAULT NULL,
   `specialization_id` double DEFAULT NULL,
   `user_id` bigint DEFAULT NULL,
   PRIMARY KEY (`filter_id`),
@@ -62,8 +63,7 @@ CREATE TABLE `filter` (
   KEY `FK1x7343qk77f8nr4d39sjwmb50` (`currency_id`),
   KEY `FK4pf96udd4hok8v7lv98xrkqcv` (`specialization_id`),
   KEY `FK3ar7feex8aud4b0v6s084bt2t` (`user_id`),
-  CONSTRAINT `FK1x7343qk77f8nr4d39sjwmb50` FOREIGN KEY (`currency_id`) REFERENCES `salary` (`salary_id`),
-  CONSTRAINT `FK3ar7feex8aud4b0v6s084bt2t` FOREIGN KEY (`user_id`) REFERENCES `user_table` (`id`),
+  CONSTRAINT `FK1x7343qk77f8nr4d39sjwmb50` FOREIGN KEY (`currency_id`) REFERENCES `currency` (`id`),
   CONSTRAINT `FK4pf96udd4hok8v7lv98xrkqcv` FOREIGN KEY (`specialization_id`) REFERENCES `specialization` (`specialization_id`),
   CONSTRAINT `FKberl5ycn3l12ryaa8pitflhd` FOREIGN KEY (`area_id`) REFERENCES `area` (`area_id`)
 );
@@ -96,4 +96,18 @@ CREATE TABLE `filter_schedule` (
   CONSTRAINT `FK74mdn3w72g1thk43817ewhmbt` FOREIGN KEY (`filter_id`) REFERENCES `filter` (`filter_id`),
   CONSTRAINT `FKfpdpdgfw5uhxsf3ykdvyskmle` FOREIGN KEY (`schedule_id`) REFERENCES `schedule` (`id`)
 );
+CREATE TABLE `currency`(
+  `id` varchar(3) NOT NULL,
+  `name` varchar(124),
+  `rate` double
+);
+CREATE TABLE `jobber_memory` (
+  `id_summary` VARCHAR(127) NOT NULL,
+  `id_vacancy` bigint NOT NULL,
+  `time_stamp` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_summary`, `id_vacancy`),
+  KEY `fk_jobber_memory` (`id_summary`)
+  );
 
