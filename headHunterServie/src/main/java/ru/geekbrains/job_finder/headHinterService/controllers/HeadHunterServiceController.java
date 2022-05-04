@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.job_finder.cor_lib.models.UserInfo;
 import ru.geekbrains.job_finder.headHinterService.services.HeadHunterService;
 import ru.geekbrains.job_finder.routing_lib.dtos.FilterDto;
+import ru.geekbrains.job_finder.routing_lib.dtos.ResumeDTO;
 import ru.geekbrains.job_finder.routing_lib.dtos.UserDto;
 
 import java.security.Principal;
@@ -34,10 +35,15 @@ public class HeadHunterServiceController {
     public List<FilterDto> getFilters() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         UserInfo principal = (UserInfo) securityContext.getAuthentication().getPrincipal();
-        System.out.println(principal);
         return List.of(FilterDto.builder().summary("Programmer").totalSends(123).isActive(true).build(),
                 FilterDto.builder().summary("Sheff").totalSends(13).isActive(false).build(),
                 FilterDto.builder().summary("driver").totalSends(999).isActive(true).build());
+    }
+    @GetMapping("/resume")
+    public List<ResumeDTO> getResume(){
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        UserInfo principal = (UserInfo) securityContext.getAuthentication().getPrincipal();
+        return service.getResumeList(principal.getId());
     }
 
     public UserDto faultedGetUserByCode(String code) {

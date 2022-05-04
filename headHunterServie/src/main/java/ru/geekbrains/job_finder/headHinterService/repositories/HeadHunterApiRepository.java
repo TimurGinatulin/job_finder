@@ -16,6 +16,7 @@ import ru.geekbrains.job_finder.headHinterService.models.SendResumeRequestBody;
 import ru.geekbrains.job_finder.headHinterService.models.Vacancy;
 import ru.geekbrains.job_finder.headHinterService.models.entity.Filter;
 import ru.geekbrains.job_finder.routing_lib.dtos.HHUserSummary;
+import ru.geekbrains.job_finder.routing_lib.dtos.ResumeDTO;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -129,7 +130,7 @@ public class HeadHunterApiRepository {
         return vacancies;
     }
 
-    public void sendResumeResponse(String accessToken,Vacancy vacancy,Filter filter) throws JsonProcessingException {
+    public void sendResumeResponse(String accessToken, Vacancy vacancy, Filter filter) throws JsonProcessingException {
         HttpHeaders headers = headersForHHServices(accessToken);
         ObjectWriter objectWriter = new ObjectMapper().writer().withDefaultPrettyPrinter();
         SendResumeRequestBody body = SendResumeRequestBody
@@ -138,8 +139,26 @@ public class HeadHunterApiRepository {
                 .resumeId(filter.getSummaryId())
                 .vacancyId(vacancy.getId())
                 .build();
-        HttpEntity<String> request = new HttpEntity<>(objectWriter.writeValueAsString(body),headers);
+        HttpEntity<String> request = new HttpEntity<>(objectWriter.writeValueAsString(body), headers);
         restTemplate.patchForObject("https://api.hh.ru/negotiations", request, String.class);
     }
 
+    public List<ResumeDTO> getResumeList(String accessToken) {
+        List<ResumeDTO> resumeDTOS = new LinkedList<>();
+        String url = "https://api.hh.ru/resumes/mine";
+        HttpHeaders headers = headersForHHServices(accessToken);
+        HttpEntity<String> request = new HttpEntity<>(headers);
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+
+        JSONObject jsonSummary = new JSONObject(response.getBody());
+        JSONArray resumeArray = jsonSummary.getJSONArray("items");
+        for (Object resume : resumeArray) {
+            JSONObject resumeJson = (JSONObject) resume;
+            resumeDTOS.add(ResumeDTO.builder()
+                    .id(resumeJson.getString("id"))
+                    .title(resumeJson.getString("title"))
+                    .build());
+        }
+        return resumeDTOS;
+    }
 }

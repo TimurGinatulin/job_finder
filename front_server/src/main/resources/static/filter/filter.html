@@ -3,6 +3,21 @@
     <form>
         <div class="row g-3 align-items-center">
             <div class="mb-3">
+                <label for="jobTitleInput" class="form-label">Filter title</label>
+                <input type="email" class="form-control" id="filterTitleInput" aria-describedby="filterTitleDesc">
+                <div id="filterTitleDesc" class="form-text">Type Filter title</div>
+            </div>
+            <div class="col-auto">
+                <select class="form-select" aria-label="Default select example" id="summarySelector"
+                        aria-describedby="summarySelectorDesc">
+                    <option selected>Undefined</option>
+                </select>
+                <div id="summarySelectorDesc" class="form-text">Experience</div>
+            </div>
+        </div>
+        <br>
+        <div class="row g-3 align-items-center">
+            <div class="mb-3">
                 <label for="jobTitleInput" class="form-label">Job title</label>
                 <input type="email" class="form-control" id="jobTitleInput" aria-describedby="jobTitleDesc">
                 <div id="jobTitleDesc" class="form-text">Type title job what you find</div>
@@ -42,7 +57,7 @@
                 <div id="experienceSelectorDesc" class="form-text">Experience</div>
             </div>
             <div class="col-auto">
-                <select class="form-select" multiple aria-label="Default select example" id="employmentSelector"
+                <select class="form-select" aria-label="Default select example" id="employmentSelector"
                         aria-describedby="employmentSelectorDesc">
                     <option selected>Undefined</option>
                 </select>
