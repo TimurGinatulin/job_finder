@@ -15,6 +15,7 @@ angular.module('app').controller('filterController', function ($scope, $http, $l
     const cIndustrySelector = document.getElementById('industrySelector');
     const cSubIndustrySelector = document.getElementById('subIndustrySelector');
     const cSalary = document.getElementById('salary');
+    const cSummary = document.getElementById('summarySelector');
 
     cSubIndustrySelector.addEventListener('change', updateFields);
 
@@ -243,6 +244,15 @@ angular.module('app').controller('filterController', function ($scope, $http, $l
                     opt.value = sch.id;
                     opt.innerHTML = sch.name;
                     cScheduleSelector.appendChild(opt);
+                });
+            });
+        $http.get(contextPath + '/hh_service/resume')
+            .then(function (response) {
+                response.data.forEach(summary => {
+                    var opt = document.createElement('option');
+                    opt.value = summary.id;
+                    opt.innerHTML = summary.title;
+                    cSummary.appendChild(opt);
                 });
             });
     }

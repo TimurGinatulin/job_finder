@@ -10,6 +10,7 @@ import ru.geekbrains.job_finder.headHinterService.repositories.HeadHunterApiRepo
 import ru.geekbrains.job_finder.headHinterService.repositories.HeadHunterDBRepository;
 import ru.geekbrains.job_finder.headHinterService.repositories.JobMemoryRepository;
 import ru.geekbrains.job_finder.routing_lib.dtos.HHUserSummary;
+import ru.geekbrains.job_finder.routing_lib.dtos.ResumeDTO;
 import ru.geekbrains.job_finder.routing_lib.dtos.UserDto;
 import ru.geekbrains.job_finder.routing_lib.feigns.UserFeignClient;
 
@@ -63,5 +64,13 @@ public class HeadHunterService {
                 }
             });
         }
+    }
+
+    public List<ResumeDTO> getResumeList(Long id) {
+        UserToken userToken = dbRepository.findById(id).orElse(null);
+        if (userToken != null) {
+            return apiRepository.getResumeList(userToken.getAccessToken());
+        }
+        return null;
     }
 }
