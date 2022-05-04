@@ -6,11 +6,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-
-@Entity
-@Table(name = "filter")
-@NoArgsConstructor
 @Data
+@Entity
+@NoArgsConstructor
+@Table(name = "filter")
 public class Filter {
 
     @Id
@@ -26,13 +25,15 @@ public class Filter {
 
     @Column(name = "text")
     private String text;
+    @Column(name = "summary_id")
+    private String summaryId;
 
     @Column(name = "salary")
     private Long salary;
 
     @ManyToOne
-    @JoinColumn(name = "currency_id")
-    private Salary currency;
+    @JoinColumn(name="currency_id")
+    private Currency currency;
 
     @ManyToOne
     @JoinColumn(name = "area_id")

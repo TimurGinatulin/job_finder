@@ -2,14 +2,14 @@ package ru.geekbrains.job_finder.headHinterService.models.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.geekbrains.job_finder.ms_user.models.Enum.ScheduleEnum;
+import ru.geekbrains.job_finder.headHinterService.models.Enum.ScheduleEnum;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "schedule")
-@NoArgsConstructor
 @Data
+@Entity
+@NoArgsConstructor
+@Table(name = "schedule")
 public class Schedule {
 
     @Id

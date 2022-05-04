@@ -3,15 +3,14 @@ package ru.geekbrains.job_finder.headHinterService.models.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.geekbrains.job_finder.ms_user.models.Enum.ExperienceEnum;
+import ru.geekbrains.job_finder.headHinterService.models.Enum.ExperienceEnum;
 import ru.geekbrains.job_finder.routing_lib.dtos.HHUserSummary;
 
 import javax.persistence.*;
-
-@Entity
-@Table(name = "experience")
-@NoArgsConstructor
 @Data
+@Entity
+@NoArgsConstructor
+@Table(name = "experience")
 public class Experience {
 
     @Id
