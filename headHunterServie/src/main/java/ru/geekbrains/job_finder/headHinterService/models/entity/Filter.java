@@ -6,11 +6,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-
-@Entity
-@Table(name = "filter")
-@NoArgsConstructor
 @Data
+@Entity
+@NoArgsConstructor
+@Table(name = "filter")
 public class Filter {
 
     @Id
@@ -33,7 +32,7 @@ public class Filter {
     private Long salary;
 
     @ManyToOne
-    @JoinColumn(name = "currency_id")
+    @JoinColumn(name="currency_id")
     private Currency currency;
 
     @ManyToOne

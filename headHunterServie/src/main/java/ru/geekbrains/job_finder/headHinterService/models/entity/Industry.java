@@ -5,11 +5,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
-
-@Entity
-@Table(name = "industry")
-@NoArgsConstructor
 @Data
+@Entity
+@NoArgsConstructor
+@Table(name = "industry")
 public class Industry {
 
     @Id

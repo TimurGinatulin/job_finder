@@ -43,7 +43,12 @@ CREATE TABLE `experience` (
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`experience_id`)
 );
-
+CREATE TABLE `currency`(
+  `id` varchar(3) NOT NULL,
+  `name` varchar(124),
+  `rate` double,
+  PRIMARY KEY (`id`)
+);
 CREATE TABLE `filter` (
   `filter_id` bigint NOT NULL AUTO_INCREMENT,
   `summary_id` varchar(127) NOT NULL,
@@ -96,11 +101,7 @@ CREATE TABLE `filter_schedule` (
   CONSTRAINT `FK74mdn3w72g1thk43817ewhmbt` FOREIGN KEY (`filter_id`) REFERENCES `filter` (`filter_id`),
   CONSTRAINT `FKfpdpdgfw5uhxsf3ykdvyskmle` FOREIGN KEY (`schedule_id`) REFERENCES `schedule` (`id`)
 );
-CREATE TABLE `currency`(
-  `id` varchar(3) NOT NULL,
-  `name` varchar(124),
-  `rate` double
-);
+
 CREATE TABLE `jobber_memory` (
   `id_summary` VARCHAR(127) NOT NULL,
   `id_vacancy` bigint NOT NULL,

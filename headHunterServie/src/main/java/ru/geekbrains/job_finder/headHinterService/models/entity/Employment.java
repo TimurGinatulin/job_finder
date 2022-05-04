@@ -5,11 +5,10 @@ import lombok.NoArgsConstructor;
 import ru.geekbrains.job_finder.headHinterService.models.Enum.EmploymentEnum;
 
 import javax.persistence.*;
-
-@Entity
-@Table(name = "empolyment")
-@NoArgsConstructor
 @Data
+@Entity
+@NoArgsConstructor
+@Table(name = "empolyment")
 public class Employment {
 
     @Id

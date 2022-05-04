@@ -6,10 +6,10 @@ import ru.geekbrains.job_finder.headHinterService.models.Enum.ScheduleEnum;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "schedule")
-@NoArgsConstructor
 @Data
+@Entity
+@NoArgsConstructor
+@Table(name = "schedule")
 public class Schedule {
 
     @Id
