@@ -16,6 +16,9 @@ angular.module('app').controller('filterController', function ($scope, $http, $l
     const cSubIndustrySelector = document.getElementById('subIndustrySelector');
     const cSalary = document.getElementById('salary');
     const cSummary = document.getElementById('summarySelector');
+    const cFilterName = document.getElementById('filterTitleInput');
+    const cCurrency = document.getElementById('currencySelector');
+    const cCoverLetter = document.getElementById('coverLetter');
 
     cSubIndustrySelector.addEventListener('change', updateFields);
 
@@ -32,8 +35,6 @@ angular.module('app').controller('filterController', function ($scope, $http, $l
     cExperienceSelector.addEventListener('change', updateFields);
 
     cEmploymentSelector.addEventListener('change', updateFields);
-
-    cSalary.addEventListener('input', updateFields);
 
     if($localStorage.apsToken){
         $http.defaults.headers.common.Authorization = $localStorage.apsToken;
@@ -245,6 +246,13 @@ angular.module('app').controller('filterController', function ($scope, $http, $l
                     opt.innerHTML = sch.name;
                     cScheduleSelector.appendChild(opt);
                 });
+                response.data.currency.forEach(cur => {
+                    var opt = document.createElement('option');
+                    opt.value = cur.id;
+                    opt.innerHTML = cur.name;
+                    cCurrency.appendChild(opt);
+                });
+                cCurrency
             });
         $http.get(contextPath + '/hh_service/resume')
             .then(function (response) {
@@ -259,4 +267,60 @@ angular.module('app').controller('filterController', function ($scope, $http, $l
 
     receiveDictionaryForSelectors();
     getCountryDic();
+
+    $scope.sendFilter = function(){
+      let vAreaId = null;
+      let vSpecId = null;
+      let vIndId = null;
+
+      if (cCountrySelector.value != 'Undefined')
+        vAreaId = cCountrySelector.value;
+
+      if (cRegionSelector.value != 'Undefined')
+        vAreaId = cRegionSelector.value;
+
+      if (cCitySelector.value != 'Undefined')
+        vAreaId = cCitySelector.value;
+
+      if (vAreaId == null || vAreaId.length === 0)
+        vAreaId = null;
+
+      if (cSpecializationSelector.value != 'Undefined')
+          vSpecId = cSpecializationSelector.value;
+
+      if (cSubSpecializationSelector.value != 'Undefined')
+          vSpecId = cSubSpecializationSelector.value;
+
+      if (vSpecId == null || vSpecId.length === 0)
+          vSpecId = null;
+
+      if (cIndustrySelector.value != 'Undefined')
+        vIndId = cIndustrySelector.value;
+
+      if (cSubIndustrySelector.value != 'Undefined') {
+        vIndId = '';
+        vIndId = cSubIndustrySelector.value;
+      }
+
+      if (vIndId == null || vIndId.length === 0)
+        vIndId = null;
+
+      let filter = {
+        summary: cSummary.value,
+        filterName: cFilterName.value,
+        text: cJobTitleInput.value,
+        experience:[cExperienceSelector.value],
+        salary: cSalary.value,
+        currencyCode: cCurrency.value,
+        area: vAreaId,
+        employment:[cEmploymentSelector.value],
+        schedule:[cScheduleSelector.value],
+        specializations: vSpecId,
+        industry: vIndId,
+        coverLetter: cCoverLetter.value,
+        isActive: true,
+        totalSends: 0
+      };
+      console.log(filter);
+    }
 });
