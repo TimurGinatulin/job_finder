@@ -71,8 +71,16 @@
                 <div id="scheduleSelectorDesc" class="form-text">Schedule</div>
             </div>
             <div class="col-auto">
-                <input type="text" class="form-control" aria-describedby="addon-wrapping" id="salary">
-                <div id="salaryDesc" class="form-text">Salary (RUR)</div>
+                <label for="salary" class="form-label">Salary</label>
+                <input type="range" class="form-range" min="0" max="1000000" id="salary">
+            </div>
+
+            <div class="col-auto">
+                <select class="form-select" aria-label="Default select example" id="currencySelector"
+                        aria-describedby="currencySelectorDesc">
+                    <option selected>Undefined</option>
+                </select>
+                <div id="currencySelectorDesc" class="form-text">Currency</div>
             </div>
         </div>
         <br>
@@ -113,6 +121,11 @@
         <div class="p-3 mb-2 bg-warning text-dark" id="test" >  </div>
         <br>
         <div id="findVacancyLabel"></div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <br>
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave a comment here" id="coverLetter" style="height: 100px"></textarea>
+            <label for="coverLetter">Cover Letter</label>
+        </div>
+        <button type="submit" class="btn btn-primary" ng-click="sendFilter()">Submit</button>
     </form>
 </div>
