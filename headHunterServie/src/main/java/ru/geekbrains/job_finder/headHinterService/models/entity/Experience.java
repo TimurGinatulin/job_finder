@@ -1,6 +1,7 @@
 package ru.geekbrains.job_finder.headHinterService.models.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.geekbrains.job_finder.headHinterService.models.Enum.ExperienceEnum;
@@ -9,12 +10,13 @@ import ru.geekbrains.job_finder.routing_lib.dtos.HHUserSummary;
 import javax.persistence.*;
 @Data
 @Entity
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "experience")
 public class Experience {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "experience_id")
     private String id;
 
