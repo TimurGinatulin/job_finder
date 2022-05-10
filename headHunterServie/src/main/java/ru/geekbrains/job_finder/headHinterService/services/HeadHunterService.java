@@ -53,6 +53,8 @@ public class HeadHunterService {
     @Autowired
     private JobMemoryRepository jobMemoryRepository;
     @Autowired
+    private FilterDBRepository filterRepository;
+    @Autowired
     private RestTemplate restTemplate;
 
     public UserDto getUserByCode(String code) {
