@@ -1,5 +1,7 @@
 package ru.geekbrains.job_finder.headHinterService.models.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
@@ -7,7 +9,9 @@ import javax.persistence.*;
 import java.util.List;
 @Entity
 @Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "currency")
 public class Currency {
     @Id

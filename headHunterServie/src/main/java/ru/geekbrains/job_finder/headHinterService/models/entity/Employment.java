@@ -1,5 +1,7 @@
 package ru.geekbrains.job_finder.headHinterService.models.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.geekbrains.job_finder.headHinterService.models.Enum.EmploymentEnum;
@@ -7,12 +9,13 @@ import ru.geekbrains.job_finder.headHinterService.models.Enum.EmploymentEnum;
 import javax.persistence.*;
 @Data
 @Entity
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "empolyment")
 public class Employment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "empolyment_id")
     private String id;
 

@@ -1,5 +1,7 @@
 package ru.geekbrains.job_finder.headHinterService.models.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.geekbrains.job_finder.headHinterService.models.Enum.ScheduleEnum;
@@ -8,12 +10,13 @@ import javax.persistence.*;
 
 @Data
 @Entity
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "schedule")
 public class Schedule {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
     @Column(name = "name")
