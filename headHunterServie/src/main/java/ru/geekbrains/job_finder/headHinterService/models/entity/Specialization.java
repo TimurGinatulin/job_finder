@@ -1,5 +1,7 @@
 package ru.geekbrains.job_finder.headHinterService.models.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,12 +10,13 @@ import java.util.List;
 
 @Data
 @Entity
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "specialization")
 public class Specialization {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "specialization_id")
     private Double id;
 

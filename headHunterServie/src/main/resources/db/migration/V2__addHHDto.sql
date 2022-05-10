@@ -1,5 +1,5 @@
 CREATE TABLE `area` (
-  `area_id` bigint NOT NULL AUTO_INCREMENT,
+  `area_id` bigint NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `parent_id` bigint DEFAULT NULL,
   PRIMARY KEY (`area_id`),

@@ -36,6 +36,12 @@ angular.module('app').controller('filterController', function ($scope, $http, $l
 
     cEmploymentSelector.addEventListener('change', updateFields);
 
+    cSalary.addEventListener('change', changeSalary);
+
+    function changeSalary(){
+      document.getElementById('selectedSalary').innerHTML = 'Salary ' + cSalary.value;
+    };
+
     if($localStorage.apsToken){
         $http.defaults.headers.common.Authorization = $localStorage.apsToken;
     }
