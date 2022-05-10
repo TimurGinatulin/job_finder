@@ -31,6 +31,6 @@ public class Specialization {
     private Specialization parentSpecialization;
 
     @OneToMany(mappedBy = "specialization")
-    private List<Filter> users;
+    private List<Filter> filters;
 
 }

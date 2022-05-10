@@ -26,4 +26,7 @@ public class Industry {
     @JoinColumn(name = "parent_id")
     private Industry industry;
 
+    @OneToMany(mappedBy = "industry")
+    private List<Filter> filters;
+
 }

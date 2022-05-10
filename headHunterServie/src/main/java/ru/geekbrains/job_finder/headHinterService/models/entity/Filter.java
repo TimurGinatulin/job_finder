@@ -25,6 +25,7 @@ public class Filter {
 
     @Column(name = "text")
     private String text;
+
     @Column(name = "summary_id")
     private String summaryId;
 
@@ -78,5 +79,9 @@ public class Filter {
             inverseJoinColumns = @JoinColumn(name = "schedule_id")
     )
     private List<Schedule> schedule;
+
+    @ManyToOne
+    @JoinColumn(name = "industry_id")
+    private Industry industry;
 
 }

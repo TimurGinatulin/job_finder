@@ -8,6 +8,7 @@ import java.util.List;
 @Builder
 @Getter
 public class FilterDto {
+    private Long id;
     private String summary;
     private String filterName;
     private String text;
