@@ -288,4 +288,20 @@ public class HeadHunterService {
         byIdUser.forEach(filter -> dtos.add(castToDTO(filter)));
         return dtos;
     }
+
+    public List<Specialization> findAllSpec() {
+        return specializationDBRepository.findMainSpec();
+    }
+
+    public List<Specialization> findAllSpec(Double id) {
+        return specializationDBRepository.findByParent(id);
+    }
+
+    public List<Industry> findAllInd() {
+        return industryDBRepository.findMainInd();
+    }
+
+    public List<Industry> findAllInd(Double id) {
+        return industryDBRepository.findByParent(id);
+    }
 }

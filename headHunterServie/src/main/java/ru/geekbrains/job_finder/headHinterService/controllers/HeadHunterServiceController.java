@@ -6,6 +6,8 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.job_finder.cor_lib.models.UserInfo;
+import ru.geekbrains.job_finder.headHinterService.models.entity.Industry;
+import ru.geekbrains.job_finder.headHinterService.models.entity.Specialization;
 import ru.geekbrains.job_finder.headHinterService.services.HeadHunterService;
 import ru.geekbrains.job_finder.routing_lib.dtos.FilterDto;
 import ru.geekbrains.job_finder.routing_lib.dtos.ResumeDTO;
@@ -23,6 +25,26 @@ public class HeadHunterServiceController {
     @HystrixCommand(fallbackMethod = "faultedGetUserByCode")
     public UserDto getUserByCode(@RequestParam(name = "code") String code) {
         return service.getUserByCode(code);
+    }
+
+    @GetMapping("/specializations")
+    public List<Specialization> getSpecialization() {
+        return service.findAllSpec();
+    }
+
+    @GetMapping("/specializations/{id}")
+    public List<Specialization> getSpecializationById(@PathVariable Double id) {
+        return service.findAllSpec(id);
+    }
+
+    @GetMapping("/industry")
+    public List<Industry> getIndustry() {
+        return service.findAllInd();
+    }
+
+    @GetMapping("/industry/{id}")
+    public List<Industry> getIndustryById(@PathVariable Double id) {
+        return service.findAllInd(id);
     }
 
     @GetMapping("/filters")

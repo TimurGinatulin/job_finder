@@ -1,6 +1,6 @@
 angular.module('app').controller('filterController', function ($scope, $http, $localStorage) {
-    var vSpecializations;
-    var vIndustry;
+    var vSelectedSpecialization = '';
+    var vSelectedIndustry = '';
     var vSalaryWasChanged = false;
 
     const contextPath = 'http://localhost:5555';
@@ -72,38 +72,62 @@ angular.module('app').controller('filterController', function ($scope, $http, $l
 
     function updateFields(jobTitleInp) {
         checkFilterFields();
-        if (cSpecializationSelector.value == 'Undefined')
-            cSubSpecializationSelector.disabled = true;
-        else {
+        if (cSpecializationSelector.value == 'Undefined'){
+          cSubSpecializationSelector.disabled = true;
+          cSubSpecializationSelector.innerHTML = ''
+          var opt = document.createElement('option');
+          opt.value = 'Undefined';
+          opt.innerHTML = 'Undefined';
+          cSubSpecializationSelector.appendChild(opt);
+        }
+        else if (cSubSpecializationSelector.value == '' || vSelectedSpecialization != cSpecializationSelector.value){
             cSubSpecializationSelector.disabled = false;
-            vSpecializations.forEach(mainSpec => {
-                if (mainSpec.id == cSpecializationSelector.value) {
-                    var subSpec = mainSpec.specializations;
-                    subSpec.forEach(subSpec => {
-                        var opt = document.createElement('option');
-                        opt.value = subSpec.id;
-                        opt.innerHTML = subSpec.name;
-                        cSubSpecializationSelector.appendChild(opt);
-                    });
-                }
-            });
+            $http.get(contextPath + '/hh_service/specializations/' + cSpecializationSelector.value)
+              .then(function (response) {
+                let subSpec = response.data;
+                cSubSpecializationSelector.innerHTML = ''
+                var opt = document.createElement('option');
+                opt.value = 'Undefined';
+                opt.innerHTML = 'Undefined';
+                cSubSpecializationSelector.appendChild(opt);
+                subSpec.forEach(subSpec => {
+                  var opt = document.createElement('option');
+                  opt.value = subSpec.id;
+                  opt.innerHTML = subSpec.name;
+                  cSubSpecializationSelector.appendChild(opt);
+                });
+              });
         }
-        if (cIndustrySelector.value == 'Undefined')
-            cSubIndustrySelector.disabled = true;
-        else {
+        vSelectedSpecialization = cSpecializationSelector.value;
+
+
+        if (cIndustrySelector.value == 'Undefined'){
+          cSubIndustrySelector.disabled = true;
+          cSubIndustrySelector.innerHTML = ''
+          var opt = document.createElement('option');
+          opt.value = 'Undefined';
+          opt.innerHTML = 'Undefined';
+          cSubIndustrySelector.appendChild(opt);
+        }
+        else if(cSubIndustrySelector.value == '' || vSelectedIndustry != cIndustrySelector.value) {
             cSubIndustrySelector.disabled = false;
-            vIndustry.forEach(mainInd => {
-                if (mainInd.id == cIndustrySelector.value) {
-                    var subInd = mainInd.industries;
-                    subInd.forEach(subInd => {
-                        var opt = document.createElement('option');
-                        opt.value = subInd.id;
-                        opt.innerHTML = subInd.name;
-                        cSubIndustrySelector.appendChild(opt);
-                    });
-                }
-            });
+            $http.get(contextPath + '/hh_service/industry/' + cIndustrySelector.value)
+              .then(function (response) {
+                let subSpec = response.data;
+                cSubIndustrySelector.innerHTML = ''
+                var opt = document.createElement('option');
+                opt.value = 'Undefined';
+                opt.innerHTML = 'Undefined';
+                cSubIndustrySelector.appendChild(opt);
+                subSpec.forEach(subSpec => {
+                  var opt = document.createElement('option');
+                  opt.value = subSpec.id;
+                  opt.innerHTML = subSpec.name;
+                  cSubIndustrySelector.appendChild(opt);
+                });
+              });
         }
+        vSelectedIndustry = cIndustrySelector.value;
     }
 
     cCountrySelector.addEventListener('change', changeCountry);
@@ -230,7 +254,7 @@ angular.module('app').controller('filterController', function ($scope, $http, $l
     }
 
     receiveDictionaryForSelectors = function () {
-        $http.get('https://api.hh.ru/specializations')
+        $http.get(contextPath + '/hh_service/specializations')
             .then(function (response) {
                 vSpecializations = response.data;
                 vSpecializations.forEach(mainSpec => {
@@ -240,9 +264,9 @@ angular.module('app').controller('filterController', function ($scope, $http, $l
                     cSpecializationSelector.appendChild(opt);
                 });
             });
-        $http.get('https://api.hh.ru/industries')
+        $http.get(contextPath + '/hh_service/industry')
             .then(function (response) {
-                vIndustry = response.data;
+                var vIndustry = response.data;
                 vIndustry.forEach(mainInd => {
                     var opt = document.createElement('option');
                     opt.value = mainInd.id;
