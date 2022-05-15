@@ -3,6 +3,21 @@
     <form>
         <div class="row g-3 align-items-center">
             <div class="mb-3">
+                <label for="jobTitleInput" class="form-label">Filter title</label>
+                <input type="email" class="form-control" id="filterTitleInput" aria-describedby="filterTitleDesc">
+                <div id="filterTitleDesc" class="form-text">Type Filter title</div>
+            </div>
+            <div class="col-auto">
+                <select class="form-select" aria-label="Default select example" id="summarySelector"
+                        aria-describedby="summarySelectorDesc">
+                    <option>Undefined</option>
+                </select>
+                <div id="summarySelectorDesc" class="form-text">Summary</div>
+            </div>
+        </div>
+        <br>
+        <div class="row g-3 align-items-center">
+            <div class="mb-3">
                 <label for="jobTitleInput" class="form-label">Job title</label>
                 <input type="email" class="form-control" id="jobTitleInput" aria-describedby="jobTitleDesc">
                 <div id="jobTitleDesc" class="form-text">Type title job what you find</div>
@@ -42,7 +57,7 @@
                 <div id="experienceSelectorDesc" class="form-text">Experience</div>
             </div>
             <div class="col-auto">
-                <select class="form-select" multiple aria-label="Default select example" id="employmentSelector"
+                <select class="form-select" aria-label="Default select example" id="employmentSelector"
                         aria-describedby="employmentSelectorDesc">
                     <option selected>Undefined</option>
                 </select>
@@ -56,8 +71,17 @@
                 <div id="scheduleSelectorDesc" class="form-text">Schedule</div>
             </div>
             <div class="col-auto">
-                <input type="text" class="form-control" aria-describedby="addon-wrapping" id="salary">
-                <div id="salaryDesc" class="form-text">Salary (RUR)</div>
+                <label id="selectedSalary" for="salary" class="form-label">Salary</label>
+                <div></div>
+                <input type="range" class="form-range" min="0" max="1000000" id="salary">
+            </div>
+
+            <div class="col-auto">
+                <select class="form-select" aria-label="Default select example" id="currencySelector"
+                        aria-describedby="currencySelectorDesc">
+                    <option selected>Undefined</option>
+                </select>
+                <div id="currencySelectorDesc" class="form-text">Currency</div>
             </div>
         </div>
         <br>
@@ -95,9 +119,12 @@
             </div>
         </div>
         <br>
-        <div class="p-3 mb-2 bg-warning text-dark" id="test" >  </div>
-        <br>
         <div id="findVacancyLabel"></div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <br>
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave a comment here" id="coverLetter" style="height: 100px"></textarea>
+            <label for="coverLetter">Cover Letter</label>
+        </div>
+        <button type="submit" class="btn btn-primary" ng-click="sendFilter()">Submit</button>
     </form>
 </div>

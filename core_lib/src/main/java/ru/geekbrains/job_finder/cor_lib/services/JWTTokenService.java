@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 import ru.geekbrains.job_finder.cor_lib.interfacces.ITokenService;
 import ru.geekbrains.job_finder.cor_lib.models.UserInfo;
 
+import java.lang.reflect.Array;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class JWTTokenService implements ITokenService {
@@ -39,8 +39,8 @@ public class JWTTokenService implements ITokenService {
                 .setSigningKey(JWT_SECRET)
                 .parseClaimsJws(token);
         String email = jwsClaims.getBody().getSubject();
-        Long id = Long.parseLong(jwsClaims.getBody().get("id", String.class));
-        List<String> roles = jwsClaims.getBody().get("roles", List.class);
+        Long id = jwsClaims.getBody().get("id", Long.class);
+        List<String> roles = jwsClaims.getBody().get("roles", ArrayList.class);
         return UserInfo.builder()
                 .id(id)
                 .userEmail(email)

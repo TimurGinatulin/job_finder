@@ -16,6 +16,10 @@
         templateUrl: 'filter/filter.html',
         controller: 'filterController'
       })
+      .when('/filter_list', {
+        templateUrl: 'filterList/filterList.html',
+        controller: 'filterListController'
+      })
       .otherwise({
         redirectTo: '/'
       });
@@ -36,6 +40,10 @@ angular.module('app').controller('indexController', function ($scope, $http, $lo
   var vCode;
   const cUrlParams = new URLSearchParams(window.location.search);
 
+  if($localStorage.apsToken){
+    $http.defaults.headers.common.Authorization = $localStorage.apsToken;
+  }
+
   HHAuthComplete = function() {
     vCode = cUrlParams.get("code");
     if(vCode != null){
@@ -47,8 +55,9 @@ angular.module('app').controller('indexController', function ($scope, $http, $lo
   login = function(){
     if($localStorage.hh_auth_code && !$localStorage.currentUser){
       $http.get(contextPath + '/auth/login/' + $localStorage.hh_auth_code )
-        .then(function (response){
-          $http.defaults.headers.common.Authorization = response.data.apsToken;
+        .then(function successCallback (response){
+          $localStorage.apsToken = response.data.apsToken;
+          $http.defaults.headers.common.Authorization = $localStorage.apsToken;
           $localStorage.currentUser = {
             id: response.data.id,
             first_name: response.data.firstName,
@@ -59,7 +68,7 @@ angular.module('app').controller('indexController', function ($scope, $http, $lo
           };
           delete $localStorage.hh_auth_code;
           window.location.href = "http://localhost:8080";
-        });
+        }, function errorCallback(response) {});
     }
   }
 
