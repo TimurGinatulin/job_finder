@@ -1,5 +1,6 @@
 package ru.geekbrains.job_finder.headHinterService.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,14 +26,14 @@ public class Specialization {
 
     @Column(name = "laboring")
     private Boolean laboring;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "parentSpecialization")
     private List<Specialization> specializations;
 
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private Specialization parentSpecialization;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "specialization")
     private List<Filter> users;
 
