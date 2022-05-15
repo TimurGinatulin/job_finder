@@ -23,7 +23,7 @@ public class Industry {
     private String name;
 
     @OneToMany(mappedBy = "industry")
-    private List<Industry> industries;
+    private List<Filter> filters;
 
     @ManyToOne
     @JoinColumn(name = "parent_id")

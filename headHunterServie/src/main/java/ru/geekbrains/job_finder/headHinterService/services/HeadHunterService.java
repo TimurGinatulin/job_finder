@@ -10,15 +10,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import ru.geekbrains.job_finder.cor_lib.models.UserInfo;
 import ru.geekbrains.job_finder.headHinterService.models.Vacancy;
 import ru.geekbrains.job_finder.headHinterService.models.entity.*;
 import ru.geekbrains.job_finder.headHinterService.repositories.*;
+import ru.geekbrains.job_finder.routing_lib.dtos.FilterDto;
 import ru.geekbrains.job_finder.routing_lib.dtos.HHUserSummary;
 import ru.geekbrains.job_finder.routing_lib.dtos.ResumeDTO;
 import ru.geekbrains.job_finder.routing_lib.dtos.UserDto;
 import ru.geekbrains.job_finder.routing_lib.feigns.UserFeignClient;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class HeadHunterService {
@@ -44,6 +50,8 @@ public class HeadHunterService {
     private UserFeignClient userFeignClient;
     @Autowired
     private JobMemoryRepository jobMemoryRepository;
+    @Autowired
+    private FilterDBRepository filterDBRepository;
     @Autowired
     private RestTemplate restTemplate;
 
@@ -130,7 +138,7 @@ public class HeadHunterService {
             specializationDBRepository.save(Specialization.builder()
                     .id(indJSON.getDouble("id"))
                     .name(indJSON.getString("name"))
-                    .laboring(indJSON.has("laboring") ? indJSON.getBoolean("laboring") : false)
+                    .laboring(indJSON.has("laboring") && indJSON.getBoolean("laboring"))
                     .parentSpecialization(null)
                     .build());
             JSONArray subIndustries = indJSON.getJSONArray("specializations");
@@ -139,7 +147,7 @@ public class HeadHunterService {
                 specializationDBRepository.save(Specialization.builder()
                         .id(subIndJSON.getDouble("id"))
                         .name(subIndJSON.getString("name"))
-                        .laboring(subIndJSON.has("laboring") ? subIndJSON.getBoolean("laboring") : false)
+                        .laboring(subIndJSON.has("laboring") && subIndJSON.getBoolean("laboring"))
                         .parentSpecialization(specializationDBRepository.findById(indJSON.getDouble("id")).orElse(null))
                         .build());
             }
@@ -197,4 +205,87 @@ public class HeadHunterService {
         }
     }
 
+    public void saveFilter(FilterDto dto, UserInfo userInfo) {
+        Filter filter = fillFilter(dto);
+        filter.setUserId(userInfo.getId());
+        if (dto.getIdFilter() != null) {
+            Filter filterFromDB = filterDBRepository.findById(dto.getIdFilter()).orElse(null);
+            if (filterFromDB != null) {
+                filter.setTimeStamp(filterFromDB.getTimeStamp());
+                filter.setUpdatedAt(LocalDateTime.now());
+                filter.setDeletedAt(filterFromDB.getDeletedAt());
+            }
+        }
+        filterDBRepository.save(filter);
+    }
+
+    private Filter fillFilter(FilterDto filterDto) {
+        Filter filter = new Filter();
+        List<Employment> employments = filterDto.getEmployment()
+                .stream()
+                .map(emp -> employmentDBRepository.getById(emp))
+                .collect(Collectors.toList());
+        List<Experience> experiences = filterDto.getExperience()
+                .stream()
+                .map(emp -> experienceDBRepository.getById(emp))
+                .collect(Collectors.toList());
+        List<Schedule> schedules = filterDto.getSchedule()
+                .stream()
+                .map(emp -> scheduleDBRepository.getById(emp))
+                .collect(Collectors.toList());
+        filter.setIdFilter(filterDto.getIdFilter());
+        filter.setSummaryId(filterDto.getSummary());
+        filter.setFilterName(filterDto.getFilterName());
+        filter.setText(filterDto.getText());
+        filter.setSalary(filterDto.getSalary());
+        filter.setCurrency(filterDto.getCurrencyCode() != null ? currencyDBRepository.findById(filterDto.getCurrencyCode()).orElse(null) : null);
+        filter.setArea(filterDto.getArea() != null ? areaDBRepository.findById(filterDto.getArea()).orElse(null) : null);
+        filter.setSpecialization(filterDto.getSpecializations() != null ? specializationDBRepository.findById(filterDto.getSpecializations()).orElse(null) : null);
+        filter.setEmployment(employments);
+        filter.setExperience(experiences);
+        filter.setSchedule(schedules);
+        filter.setCoverLetter(filterDto.getCoverLetter());
+        filter.setIndustry(filterDto.getIndustry() != null ? industryDBRepository.findById(filterDto.getIndustry()).orElse(null) : null);
+        filter.setUpdatedAt(LocalDateTime.now());
+        return filter;
+    }
+
+    public FilterDto findById(Long id, Long userId) {
+        Filter filter = filterDBRepository.findById(id).orElse(null);
+        if (filter != null && filter.getUserId().equals(userId)) {
+            return castToDTO(filter);
+        }
+        return null;
+    }
+
+    private FilterDto castToDTO(Filter filter) {
+        FilterDto dto = FilterDto.builder()
+                .idFilter(filter.getIdFilter())
+                .summary(filter.getSummaryId())
+                .filterName(filter.getFilterName())
+                .text(filter.getText())
+                .experience(new ArrayList<>())
+                .salary(filter.getSalary())
+                .currencyCode(filter.getCurrency() != null ? filter.getCurrency().getCode() : null)
+                .area(filter.getArea() != null ? filter.getArea().getId() : null)
+                .employment(new ArrayList<>())
+                .schedule(new ArrayList<>())
+                .specializations(filter.getSpecialization() != null ? filter.getSpecialization().getId() : null)
+                .industry(filter.getIndustry() != null ? filter.getIndustry().getId() : null)
+                .coverLetter(filter.getCoverLetter())
+                .isActive(true)
+                .totalSends(137)
+                .build();
+        filter.getExperience().forEach(exp -> dto.getExperience().add(exp.getId()));
+        filter.getEmployment().forEach(emp -> dto.getEmployment().add(emp.getId()));
+        filter.getSchedule().forEach(sch -> dto.getSchedule().add(sch.getId()));
+        return dto;
+    }
+
+    public List<FilterDto> findAll(Long id) {
+        List<FilterDto> dtos = new LinkedList<>();
+        List<Filter> byIdUser = filterDBRepository.findByIdUser(id);
+        byIdUser.forEach(filter -> dtos.add(castToDTO(filter)));
+        return dtos;
+    }
 }

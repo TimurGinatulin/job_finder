@@ -1,13 +1,16 @@
 package ru.geekbrains.job_finder.routing_lib.dtos;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 import java.util.List;
 
-@Builder
+@Setter
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class FilterDto {
+    private Long idFilter;
     private String summary;
     private String filterName;
     private String text;
@@ -17,8 +20,8 @@ public class FilterDto {
     private Long area;
     private List<String> employment;
     private List<String> schedule;
-    private String specializations;
-    private String industry;
+    private Double specializations;
+    private Double industry;
     private String coverLetter;
     private Boolean isActive;
     private Integer totalSends;

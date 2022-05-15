@@ -10,7 +10,7 @@ angular.module('app').controller('filterListController', function ($scope, $http
   addFilterAtTable = function(filterArray){
     filterArray.forEach(el=>{
     var vAElement = document.createElement('a');
-    vAElement.href = '#';
+    vAElement.href = '#!/filter?id=' + el.idFilter;
     vAElement.classList.add('list-group-item');
     vAElement.classList.add('list-group-item-action');
     vAElement.ariaCurrent = 'true';
@@ -23,7 +23,7 @@ angular.module('app').controller('filterListController', function ($scope, $http
     var vHeaderFilterItem = document.createElement('h5');
     vHeaderFilterItem.classList.add('mb-1');
     vHeaderFilterItem.classList.add('filterHeader');
-    vHeaderFilterItem.innerHTML = el.summary;
+    vHeaderFilterItem.innerHTML = el.text;
 
     var vConditionElement = document.createElement('small');
     vConditionElement.classList.add('condition');

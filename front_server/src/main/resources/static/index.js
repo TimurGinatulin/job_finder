@@ -55,7 +55,7 @@ angular.module('app').controller('indexController', function ($scope, $http, $lo
   login = function(){
     if($localStorage.hh_auth_code && !$localStorage.currentUser){
       $http.get(contextPath + '/auth/login/' + $localStorage.hh_auth_code )
-        .then(function (response){
+        .then(function successCallback (response){
           $localStorage.apsToken = response.data.apsToken;
           $http.defaults.headers.common.Authorization = $localStorage.apsToken;
           $localStorage.currentUser = {
@@ -68,7 +68,7 @@ angular.module('app').controller('indexController', function ($scope, $http, $lo
           };
           delete $localStorage.hh_auth_code;
           window.location.href = "http://localhost:8080";
-        });
+        }, function errorCallback(response) {});
     }
   }
 

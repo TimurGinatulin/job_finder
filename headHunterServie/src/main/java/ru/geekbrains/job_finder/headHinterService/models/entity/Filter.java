@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+
 @Data
 @Entity
 @NoArgsConstructor
@@ -32,7 +33,7 @@ public class Filter {
     private Long salary;
 
     @ManyToOne
-    @JoinColumn(name="currency_id")
+    @JoinColumn(name = "currency_id")
     private Currency currency;
 
     @ManyToOne
@@ -78,5 +79,7 @@ public class Filter {
             inverseJoinColumns = @JoinColumn(name = "schedule_id")
     )
     private List<Schedule> schedule;
-
+    @ManyToOne
+    @JoinColumn(name = "industry_id")
+    private Industry industry;
 }
