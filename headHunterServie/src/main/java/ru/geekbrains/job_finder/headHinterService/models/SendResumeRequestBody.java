@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Builder
 public class SendResumeRequestBody {
-    private Long vacancyId;
-    private String resumeId;
+    private Long vacancy_id;
+    private String resume_id;
     private String message;
 }

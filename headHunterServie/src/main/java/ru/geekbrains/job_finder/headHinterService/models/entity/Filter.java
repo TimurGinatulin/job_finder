@@ -2,6 +2,8 @@ package ru.geekbrains.job_finder.headHinterService.models.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -38,6 +40,7 @@ public class Filter {
 
     @ManyToOne
     @JoinColumn(name = "area_id")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private Area area;
 
     @ManyToOne
@@ -56,7 +59,7 @@ public class Filter {
     @Column(name = "deletedAt")
     private LocalDateTime deletedAt;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "filter_employment",
             joinColumns = @JoinColumn(name = "filter_id"),
@@ -70,6 +73,7 @@ public class Filter {
             joinColumns = @JoinColumn(name = "filter_id"),
             inverseJoinColumns = @JoinColumn(name = "expirience_id")
     )
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Experience> experience;
 
     @ManyToMany
@@ -78,8 +82,12 @@ public class Filter {
             joinColumns = @JoinColumn(name = "filter_id"),
             inverseJoinColumns = @JoinColumn(name = "schedule_id")
     )
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Schedule> schedule;
     @ManyToOne
     @JoinColumn(name = "industry_id")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private Industry industry;
+    @Column(name = "totalSends")
+    private Long totalSends;
 }
