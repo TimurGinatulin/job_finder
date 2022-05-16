@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.geekbrains.job_finder.cor_lib.models.UserInfo;
 import ru.geekbrains.job_finder.headHinterService.models.Vacancy;
+import ru.geekbrains.job_finder.headHinterService.models.coposite_key.JobMemoryKey;
 import ru.geekbrains.job_finder.headHinterService.models.entity.*;
 import ru.geekbrains.job_finder.headHinterService.repositories.*;
 import ru.geekbrains.job_finder.routing_lib.dtos.FilterDto;
@@ -82,11 +83,15 @@ public class HeadHunterService {
                 jobMemoryRepository.findIdVacancyListByIdSummary(filter.getSummaryId());
         if (userToken != null) {
             List<Vacancy> newVacancy = filteredVacancy.stream()
-                    .filter(vacancy -> idVacancyListByIdSummary.contains(vacancy.getId()))
+                    .filter(vacancy -> !idVacancyListByIdSummary.contains(vacancy.getId()))
                     .toList();
             newVacancy.forEach(vacancy -> {
                 try {
-                    apiRepository.sendResumeResponse(userToken.getAccessToken(), vacancy, filter);
+                    if (apiRepository.sendResumeResponse(userToken.getAccessToken(), vacancy, filter)){
+                    jobMemoryRepository.save(new JobMemory(new JobMemoryKey(filter.getSummaryId(), vacancy.getId())));
+                    }else {
+                        System.out.println("Dont Send");
+                    }
                 } catch (JsonProcessingException e) {
                     throw new RuntimeException(e);
                 }
@@ -102,7 +107,7 @@ public class HeadHunterService {
         return null;
     }
 
-    @Scheduled(fixedRate = 24 * 60 * 60 * 1000)
+  //  @Scheduled(fixedRate = 24 * 60 * 60 * 1000)
     public void updateDictionaryInDB() {
         String url = "https://api.hh.ru/areas/";
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
@@ -189,6 +194,12 @@ public class HeadHunterService {
                     .build());
         }
         System.out.println("Schedule dictionary update");
+    }
+
+    @Scheduled(fixedRate = 12 * 60 * 60 * 1000)
+    private void sendResume() {
+        List<Filter> allFilters = filterDBRepository.findAll();
+        allFilters.forEach(filter -> sendResumeResponse(filter));
     }
 
     private void addAreas(JSONArray areas) {

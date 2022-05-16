@@ -61,6 +61,7 @@ CREATE TABLE `filter` (
   `industry_id` double DEFAULT NULL,
   `specialization_id` double DEFAULT NULL,
   `user_id` bigint DEFAULT NULL,
+  `total_sends` bigint DEFAULT 0,
   PRIMARY KEY (`filter_id`),
   KEY `FKberl5ycn3l12ryaa8pitflhd` (`area_id`),
   KEY `FK1x7343qk77f8nr4d39sjwmb50` (`currency_id`),
@@ -91,13 +92,4 @@ CREATE TABLE `filter_schedule` (
   KEY `FK74mdn3w72g1thk43817ewhmbt` (`filter_id`)
 );
 
-CREATE TABLE `jobber_memory` (
-  `id_summary` VARCHAR(127) NOT NULL,
-  `id_vacancy` bigint NOT NULL,
-  `time_stamp` datetime DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id_summary`, `id_vacancy`),
-  KEY `fk_jobber_memory` (`id_summary`)
-  );
 

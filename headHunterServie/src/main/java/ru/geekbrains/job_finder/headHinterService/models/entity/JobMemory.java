@@ -27,4 +27,10 @@ public class JobMemory {
     private LocalDateTime updatedAt;
     @Column(name = "deleted_at")
     private LocalDateTime deleted_at;
+
+    public JobMemory(JobMemoryKey jobMemoryKey) {
+        this.key = jobMemoryKey;
+        this.timeStamp = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
 }

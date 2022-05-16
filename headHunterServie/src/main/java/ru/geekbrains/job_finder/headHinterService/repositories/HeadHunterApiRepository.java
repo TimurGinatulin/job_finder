@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import ru.geekbrains.job_finder.cor_lib.models.HHResponse;
 import ru.geekbrains.job_finder.headHinterService.models.SendResumeRequestBody;
@@ -130,17 +131,20 @@ public class HeadHunterApiRepository {
         return vacancies;
     }
 
-    public void sendResumeResponse(String accessToken, Vacancy vacancy, Filter filter) throws JsonProcessingException {
+    public boolean sendResumeResponse(String accessToken, Vacancy vacancy, Filter filter) throws JsonProcessingException {
         HttpHeaders headers = headersForHHServices(accessToken);
-        ObjectWriter objectWriter = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        SendResumeRequestBody body = SendResumeRequestBody
-                .builder()
-                .message(filter.getCoverLetter())
-                .resumeId(filter.getSummaryId())
-                .vacancyId(vacancy.getId())
-                .build();
-        HttpEntity<String> request = new HttpEntity<>(objectWriter.writeValueAsString(body), headers);
-        restTemplate.patchForObject("https://api.hh.ru/negotiations", request, String.class);
+        headers.set("Content-Type", "application/json");
+        headers.add("Connection", "keep-alive");
+        headers.add("Accept", "*/*");
+        HttpEntity<String> request = new HttpEntity<>(headers);
+        try {
+            String url = "https://api.hh.ru/negotiations?vacancy_id=" + vacancy.getId() + "&resume_id="
+                    + filter.getSummaryId() + "&message=" + filter.getCoverLetter();
+          //  restTemplate.postForObject(url, request, String.class);
+            return true;
+        } catch (HttpClientErrorException e) {
+            return false;
+        }
     }
 
     public List<ResumeDTO> getResumeList(String accessToken) {

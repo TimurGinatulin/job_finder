@@ -17,4 +17,5 @@ public class JobMemoryKey implements Serializable {
     private String idSummary;
     @Column(name = "id_vacancy")
     private Long idVacancy;
+
 }
