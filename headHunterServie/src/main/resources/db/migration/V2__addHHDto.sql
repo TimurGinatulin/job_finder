@@ -62,6 +62,7 @@ CREATE TABLE `filter` (
   `specialization_id` double DEFAULT NULL,
   `user_id` bigint DEFAULT NULL,
   `total_sends` bigint DEFAULT 0,
+  `is_Active` boolean DEFAULT true,
   PRIMARY KEY (`filter_id`),
   KEY `FKberl5ycn3l12ryaa8pitflhd` (`area_id`),
   KEY `FK1x7343qk77f8nr4d39sjwmb50` (`currency_id`),

@@ -36,6 +36,9 @@ angular.module('app').controller('filterListController', function ($scope, $http
     vSpendCounter.classList.add('text-muted');
     vSpendCounter.innerHTML = 'Total send\'s ' + el.totalSends;
 
+
+
+
     vDivElement.appendChild(vHeaderFilterItem);
     vDivElement.appendChild(vConditionElement);
     vAElement.appendChild(vDivElement);
@@ -49,5 +52,7 @@ angular.module('app').controller('filterListController', function ($scope, $http
         addFilterAtTable(response.data);
       });
   }
+
+
   uploadFilterList();
 });

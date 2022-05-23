@@ -90,4 +90,10 @@ public class Filter {
     private Industry industry;
     @Column(name = "totalSends")
     private Long totalSends;
+    @Column(name = "isActive")
+    private boolean isActive;
+
+    public void setIsActive(boolean b) {
+        this.isActive = b;
+    }
 }

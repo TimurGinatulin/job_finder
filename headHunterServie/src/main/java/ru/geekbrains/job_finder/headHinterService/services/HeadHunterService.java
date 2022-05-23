@@ -25,6 +25,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -87,9 +88,9 @@ public class HeadHunterService {
                     .toList();
             newVacancy.forEach(vacancy -> {
                 try {
-                    if (apiRepository.sendResumeResponse(userToken.getAccessToken(), vacancy, filter)){
-                    jobMemoryRepository.save(new JobMemory(new JobMemoryKey(filter.getSummaryId(), vacancy.getId())));
-                    }else {
+                    if (apiRepository.sendResumeResponse(userToken.getAccessToken(), vacancy, filter)) {
+                        jobMemoryRepository.save(new JobMemory(new JobMemoryKey(filter.getSummaryId(), vacancy.getId())));
+                    } else {
                         System.out.println("Dont Send");
                     }
                 } catch (JsonProcessingException e) {
@@ -107,7 +108,7 @@ public class HeadHunterService {
         return null;
     }
 
-  //  @Scheduled(fixedRate = 24 * 60 * 60 * 1000)
+    @Scheduled(fixedRate = 24 * 60 * 60 * 1000)
     public void updateDictionaryInDB() {
         String url = "https://api.hh.ru/areas/";
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
@@ -257,6 +258,7 @@ public class HeadHunterService {
         filter.setSchedule(schedules);
         filter.setCoverLetter(filterDto.getCoverLetter());
         filter.setIndustry(filterDto.getIndustry() != null ? industryDBRepository.findById(filterDto.getIndustry()).orElse(null) : null);
+        filter.setIsActive(true);
         filter.setUpdatedAt(LocalDateTime.now());
         return filter;
     }
@@ -284,7 +286,7 @@ public class HeadHunterService {
                 .specializations(filter.getSpecialization() != null ? filter.getSpecialization().getId() : null)
                 .industry(filter.getIndustry() != null ? filter.getIndustry().getId() : null)
                 .coverLetter(filter.getCoverLetter())
-                .isActive(true)
+                .isActive(filter.isActive())
                 .totalSends(137)
                 .build();
         filter.getExperience().forEach(exp -> dto.getExperience().add(exp.getId()));
@@ -314,5 +316,13 @@ public class HeadHunterService {
 
     public List<Industry> findAllInd(Double id) {
         return industryDBRepository.findByParent(id);
+    }
+
+    public void disable(Long filterId, Long userId) {
+        Filter filter = filterDBRepository.findById(filterId).orElse(null);
+        if (filter != null && filter.getUserId() == userId) {
+            filter.setIsActive(false);
+            filterDBRepository.save(filter);
+        }
     }
 }
