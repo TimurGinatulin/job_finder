@@ -60,6 +60,12 @@ public class HeadHunterServiceController {
         UserInfo principal = (UserInfo) securityContext.getAuthentication().getPrincipal();
         return service.findById(id, principal.getId());
     }
+    @GetMapping("/filters/disable/{id}")
+    public void disableFilterById(@PathVariable Long id) {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        UserInfo principal = (UserInfo) securityContext.getAuthentication().getPrincipal();
+        service.disable(id, principal.getId());
+    }
 
     @GetMapping("/resume")
     public List<ResumeDTO> getResume() {

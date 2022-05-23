@@ -378,6 +378,7 @@ angular.module('app').controller('filterController', function ($scope, $http, $l
                   .then(function successCallback(response) {},
                   function errorCallback(response) {});
       console.log(filter);
+      document.location.href = 'http://localhost:8080/#!/filter_list';
     }
 
     changeSelectedElement = function(element, value){

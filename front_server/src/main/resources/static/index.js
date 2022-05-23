@@ -48,7 +48,6 @@ angular.module('app').controller('indexController', function ($scope, $http, $lo
     vCode = cUrlParams.get("code");
     if(vCode != null){
       $localStorage.hh_auth_code = vCode;
-      window.location.href = "http://localhost:8080";
     }
   }
 

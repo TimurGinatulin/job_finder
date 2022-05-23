@@ -1,6 +1,5 @@
-<div>
-    <link rel="stylesheet" href="home/home.css">
-    <div id="starterPage" ng-show="!isUserLoggedIn()">
+<div class="info_block">
+    <div class="info_block" id="starterPage" ng-show="!isUserLoggedIn()">
         <h1 class="open_page">Добро Пожаловать!</h1>
         <br>
         <p> Это учебный проект предназначенный для помощи начинающим специалистам своей первой работы. Те из нас, кто
@@ -13,18 +12,21 @@
             обьявления на платформе Head hunter, собирая статиску по оставленным откликам</p>
         <p>Приложение не хранит пароли пользователя, вся авторизация осуществляется, через ресурс Head hunter.</p>
     </div>
-    <div id="greetingPage">
+    <div class="info_block" id="greetingPage">
         <h1 class="open_page">{{last_name}} {{first_name}} {{middle_name}}!</h1>
         <p>Рады видеть Вас в наших рядах. Скоро здесь появится пользовательское соглашение. А пока просто нажмите
             кнопку</p>
         <div>
-            <button type="button" class="btn btn-outline-dark" ng-click="accept()">Accept</button>
+            <a href="#!" class="btn btn-secondary">Accept</a>
         </div>
     </div>
-    <div id="homePage">
+    <div class="info_block" id="homePage">
         <h1 class="open_page">С возвращением {{last_name}} {{first_name}} {{middle_name}}!</h1>
         <p>Здесь будет статистика работы нашего сервиса с ваашим резюме. Вы сможете увидить граффик рассылки по дням
             ващего резюме, список использованных фильтров а бить может и фото котенка.</p>
+        <div>
+            <a href="#!/filter_list" class="btn btn-secondary">My filter list</a>
+        </div>
     </div>
 </div>
 

@@ -58,6 +58,7 @@ public class HeadHunterApiRepository {
     }
 
     public HHUserSummary getHHUserPropertiesByCode(String code) {
+        System.out.println(code);
         HHResponse hhTokens = getHHTokens(code);
         String url = "https://api.hh.ru/me";
         HttpHeaders headers = headersForHHServices(hhTokens.getAccess_token());
